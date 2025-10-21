@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — SmartOnlineTool</title>
+  <meta name="description" content="Contact SmartOnlineTool for support, feedback, or partnerships." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="bg-animated"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">SoT</div>
+        <div>
+          <div class="site-title">SmartOnlineTool</div>
+          <div class="site-tag">Free Daily Online Tools</div>
+        </div>
+      </div>
+      <nav>
+        <a class="link" href="index.html">Home</a>
+      </nav>
+    </header>
+
+    <section class="card">
+      <h1>Contact</h1>
+      <p class="meta">Use the form below to send us a message. (This is a static template — connect to an email backend or Formspree later.)</p>
+
+      <div class="form-grid" style="margin-top:10px">
+        <input class="input" placeholder="Your name" id="name"/>
+        <input class="input" placeholder="Email" id="email"/>
+      </div>
+      <textarea class="textarea" id="message" placeholder="Your message" style="margin-top:12px"></textarea>
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn" onclick="sendContact()">Send Message</button>
+      </div>
+
+      <div id="contactResult" class="result-box" style="margin-top:12px">Messages will be sent to your email once backend is set up.</div>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+  </footer>
+
+<script>
+function sendContact(){
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const msg = document.getElementById('message').value.trim();
+  if(!name || !email || !msg){ alert('Please fill all fields'); return; }
+  // In this template, we'll just show success. Integrate with Formspree, Netlify forms, or your backend later.
+  document.getElementById('contactResult').textContent = 'Thank you — your message has been recorded (template). Connect a backend to send emails.';
+  document.getElementById('name').value=''; document.getElementById('email').value=''; document.getElementById('message').value='';
+}
+</script>
+</body>
+</html>
