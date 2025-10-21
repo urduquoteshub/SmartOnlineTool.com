@@ -1,80 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Word Counter — SmartOnlineTool</title>
-  <meta name="description" content="Free online word counter. Count words, sentences and characters instantly. SmartOnlineTool - fast and mobile friendly." />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartOnlineTool - Word Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      color: #333;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #0078ff;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-top: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 16px;
+      resize: none;
+      outline: none;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .stat-box {
+      background: #f0f8ff;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: #0078ff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: gray;
+    }
+    footer a {
+      color: #0078ff;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div class="bg-animated"></div>
-  <div class="bg-overlay"></div>
-
   <div class="container">
-    <header class="header">
-      <div class="brand">
-        <div class="logo">SoT</div>
-        <div>
-          <div class="site-title">SmartOnlineTool</div>
-          <div class="site-tag">Free Daily Online Tools</div>
-        </div>
-      </div>
-      <nav>
-        <a class="link" href="index.html">Home</a> · <a class="link" href="character-counter.html">Character</a> · <a class="link" href="remove-spaces.html">Remove Spaces</a>
-      </nav>
-    </header>
+    <h1>Word Counter Tool</h1>
+    <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
 
-    <section class="card">
-      <div class="page-header">
-        <h1>Word Counter</h1>
-        <p class="meta">Paste text below and get word, sentence and character counts instantly.</p>
-      </div>
-
-      <textarea id="txt" class="textarea" placeholder="Paste your text here..."></textarea>
-
-      <div class="row" style="margin-top:14px;">
-        <button class="btn" onclick="wcCount()">Count Now</button>
-        <button class="btn" onclick="copyText()">Copy</button>
-        <button class="btn" onclick="clearText()">Clear</button>
-      </div>
-
-      <div id="result" class="result-box" aria-live="polite" style="margin-top:12px;">
-        Words: 0 &nbsp; · &nbsp; Characters (with spaces): 0 &nbsp; · &nbsp; Characters (no spaces): 0 &nbsp; · &nbsp; Sentences: 0
-      </div>
-    </section>
-
+    <div class="stats">
+      <div class="stat-box">Words: <span id="wordCount">0</span></div>
+      <div class="stat-box">Characters (with spaces): <span id="charCount">0</span></div>
+      <div class="stat-box">Characters (no spaces): <span id="charNoSpaceCount">0</span></div>
+      <div class="stat-box">Sentences: <span id="sentenceCount">0</span></div>
+      <div class="stat-box">Paragraphs: <span id="paragraphCount">0</span></div>
+      <div class="stat-box">Reading Time: <span id="readingTime">0 min</span></div>
+    </div>
   </div>
 
-  <footer class="site-footer">
-    <a href="about.html">About</a>
-    <a href="privacy.html">Privacy</a>
+  <footer>
+    <a href="about.html">About</a> |
+    <a href="privacy.html">Privacy</a> |
     <a href="contact.html">Contact</a>
   </footer>
 
-<script src="assets/common.js"></script>
-<script>
-function wcCount(){
-  const t = document.getElementById('txt').value || '';
-  const words = countWords(t);
-  const charsWith = countChars(t);
-  const charsNoSpaces = countChars(t.replace(/\s/g,''));
-  const sentences = (t.match(/[.!?]+/g) || []).length;
-  document.getElementById('result').textContent = `Words: ${words} · Characters (with spaces): ${charsWith} · Characters (no spaces): ${charsNoSpaces} · Sentences: ${sentences}`;
-}
-function copyText(){
-  const t = document.getElementById('txt');
-  t.select();
-  document.execCommand('copy');
-  alert('Text copied to clipboard');
-}
-function clearText(){
-  document.getElementById('txt').value = '';
-  wcCount();
-}
-document.getElementById('txt').addEventListener('input', wcCount);
-wcCount();
-</script>
+  <script>
+    const textInput = document.getElementById("textInput");
+    const wordCount = document.getElementById("wordCount");
+    const charCount = document.getElementById("charCount");
+    const charNoSpaceCount = document.getElementById("charNoSpaceCount");
+    const sentenceCount = document.getElementById("sentenceCount");
+    const paragraphCount = document.getElementById("paragraphCount");
+    const readingTime = document.getElementById("readingTime");
+
+    textInput.addEventListener("input", () => {
+      const text = textInput.value.trim();
+
+      const words = text.match(/\b\w+\b/g);
+      const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+      const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
+
+      const totalWords = words ? words.length : 0;
+      const totalChars = text.length;
+      const totalCharsNoSpace = text.replace(/\s+/g, "").length;
+      const totalSentences = sentences.length;
+      const totalParagraphs = paragraphs.length;
+      const time = (totalWords / 200).toFixed(2); // ~200 words per minute
+
+      wordCount.textContent = totalWords;
+      charCount.textContent = totalChars;
+      charNoSpaceCount.textContent = totalCharsNoSpace;
+      sentenceCount.textContent = totalSentences;
+      paragraphCount.textContent = totalParagraphs;
+      readingTime.textContent = `${time} min`;
+    });
+  </script>
 </body>
 </html>
