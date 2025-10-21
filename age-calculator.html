@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Age Calculator — SmartOnlineTool</title>
+  <meta name="description" content="Calculate exact age from date of birth. SmartOnlineTool: fast, free, and accurate age calculator." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="bg-animated"></div>
+  <div class="bg-overlay"></div>
+
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">SoT</div>
+        <div>
+          <div class="site-title">SmartOnlineTool</div>
+          <div class="site-tag">Free Daily Online Tools</div>
+        </div>
+      </div>
+      <nav>
+        <a class="link" href="index.html">Home</a> · <a class="link" href="word-counter.html">Word Counter</a> · <a class="link" href="character-counter.html">Character</a>
+      </nav>
+    </header>
+
+    <section class="card">
+      <div class="page-header">
+        <h1>Age Calculator</h1>
+        <p class="meta">Select your date of birth to find exact age in years, months, and days.</p>
+      </div>
+
+      <div style="margin-top:8px">
+        <input id="dob" class="input" type="date" max="" />
+      </div>
+
+      <div class="row" style="margin-top:14px;">
+        <button class="btn" onclick="calcAge()">Calculate</button>
+        <button class="btn" onclick="clearAge()">Clear</button>
+      </div>
+
+      <div id="ageResult" class="result-box" style="margin-top:12px;">Age: —</div>
+    </section>
+
+  </div>
+
+  <footer class="site-footer">
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+  </footer>
+
+<script src="assets/common.js"></script>
+<script>
+(function(){
+  const dateInput = document.getElementById('dob');
+  // set max to today
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.max = today;
+})();
+function calcAge(){
+  const dob = document.getElementById('dob').value;
+  if(!dob){ alert('Please select your date of birth'); return; }
+  const age = calculateAge(dob);
+  if(!age){ document.getElementById('ageResult').textContent = 'Invalid date'; return; }
+  document.getElementById('ageResult').textContent = `Age: ${age.years} year(s), ${age.months} month(s), ${age.days} day(s)`;
+}
+function clearAge(){ document.getElementById('dob').value=''; document.getElementById('ageResult').textContent = 'Age: —'; }
+</script>
+</body>
+</html>
